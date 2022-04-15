@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pading3Recycler"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".di.MainApp">
         <activity
             android:name="com.gabrielribeiro.pading3recycler.presentation.ui.MainActivity"
             android:exported="true"

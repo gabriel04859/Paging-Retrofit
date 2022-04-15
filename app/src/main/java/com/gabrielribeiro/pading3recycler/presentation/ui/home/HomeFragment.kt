@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gabrielribeiro.pading3recycler.databinding.FragmentHomeBinding
-import com.gabrielribeiro.pading3recycler.domain.network.PixaBayApi
-import com.gabrielribeiro.pading3recycler.domain.repository.PixabayRepositoryImpl
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
-    private lateinit var viewModel: HomeViewModel
+    val viewModel: HomeViewModel by viewModel()
     private val homeAdapter: HomeAdapter by lazy { HomeAdapter() }
 
     private var _binding: FragmentHomeBinding? = null
@@ -29,7 +27,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        initViewModel()
         setupRecyclerView()
 
         return root
@@ -42,14 +39,6 @@ class HomeFragment : Fragment() {
                 homeAdapter.submitData(it)
             }
         }
-    }
-
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(
-            this, HomeViewModel.MainViewModelFactory(
-                PixabayRepositoryImpl(PixaBayApi.providePixabayApi())
-            )
-        )[HomeViewModel::class.java]
     }
 
     override fun onDestroyView() {
