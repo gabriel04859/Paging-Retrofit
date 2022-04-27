@@ -6,6 +6,15 @@ import com.gabrielribeiro.pading3recycler.domain.repository.PixabayRepository
 
 class HomeViewModel(repository: PixabayRepository): ViewModel() {
 
-    val imageList = repository.providePixabayApi().cachedIn(viewModelScope)
+    private val currentQuery = MutableLiveData<String?>(null)
+
+    fun searchQuery(query: String) {
+        currentQuery.value = query
+    }
+
+    val imageList = currentQuery.switchMap {
+        repository.getPixaybayList(it).cachedIn(viewModelScope)
+    }
+
 
 }

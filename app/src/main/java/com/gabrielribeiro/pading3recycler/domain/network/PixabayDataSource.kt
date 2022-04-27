@@ -7,12 +7,12 @@ import retrofit2.HttpException
 import java.io.IOException
 
 const val DEFAULT_FIRST_KEY = 1
-class DataSource(private val api: PixaBayApi): PagingSource<Int, PixabayHitsResponse>() {
+class DataSource(private val api: PixaBayApi, private val query: String?): PagingSource<Int, PixabayHitsResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PixabayHitsResponse> {
         val currentPageList = params.key ?: DEFAULT_FIRST_KEY
         return  try {
-            val response = api.getPhotos(currentPageList)
+            val response = api.getPhotos(currentPageList, query)
             val data = response.body()?.pixabayImage ?: emptyList()
             val prevKey = if (currentPageList == DEFAULT_FIRST_KEY) null else currentPageList - 1
             val nextKey = if (data.isEmpty()) null else currentPageList.plus(1)

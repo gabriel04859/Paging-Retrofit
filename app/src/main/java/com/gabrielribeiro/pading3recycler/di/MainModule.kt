@@ -12,7 +12,8 @@ val mainModule = module {
 
     single { PixaBayApi.providePixabayApi() }
     single<PixabayRepository> { PixabayRepositoryImpl(get()) }
-    factory { DataSource(get()) }
+    factory { DataSource(get(), get()) }
+    factory { String }
     viewModel {
         HomeViewModel(
             repository = get()

@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface PixaBayApi {
 
     @GET("/api")
-    suspend fun getPhotos(@Query("page") page: Int, @Query("key") key: String = KEY): Response<PixabayResponse>
+    suspend fun getPhotos(@Query("page") page: Int, @Query("q") query: String?, @Query("key") key: String = KEY): Response<PixabayResponse>
 
     companion object{
         private const val BASE_URL = "https://pixabay.com/"

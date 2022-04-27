@@ -8,6 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.gabrielribeiro.pading3recycler.R
 import com.gabrielribeiro.pading3recycler.domain.model.PixabayHitsResponse
 
@@ -20,6 +21,9 @@ class HomeAdapter : PagingDataAdapter<PixabayHitsResponse, HomeAdapter.ViewHolde
         fun bind(image: PixabayHitsResponse) {
             Glide.with(itemView.context)
                 .load(image.imageURL)
+                .centerCrop()
+                .error(R.drawable.ic_baseline_error_24)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imagePlaceholder)
         }
     }
@@ -33,7 +37,7 @@ class HomeAdapter : PagingDataAdapter<PixabayHitsResponse, HomeAdapter.ViewHolde
         return ViewHolder(
             LayoutInflater
                 .from(parent.context)
-                .inflate(R.layout.list_item, parent, false)
+                .inflate(R.layout.item_list_holder, parent, false)
         )
     }
 
